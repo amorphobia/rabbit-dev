@@ -4,3 +4,6 @@
 [submodule "plum"]
 	path = plum
 	url = https://github.com/rime/plum
+[submodule "Lib/Gdip"]
+	path = Lib/Gdip
+	url = https://github.com/buliasz/AHKv2-Gdip
