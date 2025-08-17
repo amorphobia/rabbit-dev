@@ -18,7 +18,6 @@
 
 #Include <RabbitUIStyle>
 
-global LVM_GETCOLUMNWIDTH := 0x101D
 ; https://learn.microsoft.com/windows/win32/winmsg/extended-window-styles
 global WS_EX_NOACTIVATE := "+E0x8000000"
 global WS_EX_COMPOSITED := "+E0x02000000"
@@ -78,11 +77,11 @@ class CandidateBox {
         }
     }
 
-    Build(&context, &width, &height) {
+    Build(context, &width, &height) {
         if !CandidateBox.gui || !CandidateBox.gui.built
-            CandidateBox.gui := CandidateBox.BoxGui(&context)
+            CandidateBox.gui := CandidateBox.BoxGui(context)
         else
-            CandidateBox.gui.Update(&context)
+            CandidateBox.gui.Update(context)
         width := CandidateBox.gui.max_width
         height := CandidateBox.gui.max_height
     }
@@ -98,7 +97,7 @@ class CandidateBox {
 
     class BoxGui extends Gui {
         built := false
-        __New(&context, &pre?, &sel?, &post?, &menu?) {
+        __New(context, &pre?, &sel?, &post?, &menu?) {
             super.__New(, , this)
 
             menu := context.menu
@@ -106,7 +105,7 @@ class CandidateBox {
             local num_candidates := menu.num_candidates
             local hilited_index := menu.highlighted_candidate_index + 1
             local composition := context.composition
-            GetCompositionText(&composition, &pre, &sel, &post)
+            GetCompositionText(composition, &pre, &sel, &post)
 
             this.Opt(Format("-DPIScale -Caption +Owner +AlwaysOnTop {} {} {}", WS_EX_NOACTIVATE, WS_EX_COMPOSITED, WS_EX_LAYERED))
             this.BackColor := CandidateBox.back_color
@@ -229,8 +228,8 @@ class CandidateBox {
             this.built := true
         }
 
-        Update(&context) {
-            local fake_gui := CandidateBox.BoxGui(&context, &pre, &sel, &post, &menu)
+        Update(context) {
+            local fake_gui := CandidateBox.BoxGui(context, &pre, &sel, &post, &menu)
             local num_candidates := menu.num_candidates
             local hilited_index := menu.highlighted_candidate_index + 1
             this.SetFont(CandidateBox.base_font_opt, UIStyle.font_face)
@@ -324,7 +323,7 @@ class CandidateBox {
     }
 }
 
-GetCompositionText(&composition, &pre_selected, &selected, &post_selected) {
+GetCompositionText(composition, &pre_selected, &selected, &post_selected) {
     pre_selected := ""
     selected := ""
     post_selected := ""
