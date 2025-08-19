@@ -24,7 +24,7 @@
 
 #Include <RabbitCommon>
 #Include <RabbitKeyTable>
-#Include <RabbitCandidateBox>
+#Include <RabbitCandidateBoxEx>
 #Include <RabbitCaret>
 #Include <RabbitTrayMenu>
 #Include <RabbitMonitors>
@@ -100,7 +100,8 @@ RabbitMain(args) {
 
     CleanOldLogs()
     RabbitConfig.load()
-    box := CandidateBox()
+    ; box := CandidateBox()
+    box := CandidateBoxEx()
     RegisterHotKeys()
     UpdateStateLabels()
     if status := rime.get_status(session_id) {

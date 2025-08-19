@@ -28,10 +28,13 @@ class UIStyle {
     static comment_font_point := 14
     static label_format := "{}. "
 
+    static border_width := 3
     static margin_x := 5
     static margin_y := 5
     static min_width := 160
+    static round_corner := 4
 
+    static border_color := 0xffe0e0e0
     static text_color := 0xff000000
     static back_color := 0xffeeeeec
     static candidate_text_color := 0xff000000
@@ -70,12 +73,17 @@ class UIStyle {
             UIStyle.comment_font_point := 14
         if rime.config_test_get_string(config, "style/label_format", &fmt) && fmt
             UIStyle.label_format := fmt
+        if rime.config_test_get_string(config, "style/layout/border_width", &bw) && bw >= 0
+            UIStyle.border_width := bw
         if rime.config_test_get_int(config, "style/layout/margin_x", &mx) && mx >= 0
             UIStyle.margin_x := mx
         if rime.config_test_get_int(config, "style/layout/margin_y", &my) && my >= 0
             UIStyle.margin_y := my
         if rime.config_test_get_int(config, "style/layout/min_width", &w) && w >= 0
             UIStyle.min_width := w
+        if rime.config_test_get_int(config, "style/layout/round_corner", &r) && r >= 0
+            UIStyle.round_corner := r
+
         if initialize and color := rime.config_get_string(config, "style/color_scheme")
             UIStyle.UpdateColor(config, color)
     }
@@ -90,6 +98,7 @@ class UIStyle {
                     fmt := cfmt
             }
 
+            UIStyle.border_color := UIStyle.GetColor(config, prefix . "/border_color", fmt, 0xffe0e0e0)
             UIStyle.text_color := UIStyle.GetColor(config, prefix . "/text_color", fmt, 0xff000000)
             UIStyle.back_color := UIStyle.GetColor(config, prefix . "/back_color", fmt, 0xffeceeee)
             UIStyle.candidate_text_color := UIStyle.GetColor(config, prefix . "/candidate_text_color", fmt, UIStyle.text_color)
